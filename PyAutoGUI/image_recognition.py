@@ -1,5 +1,4 @@
 import pyautogui
-import keyboard
 import time
 
 yt_x = 3316

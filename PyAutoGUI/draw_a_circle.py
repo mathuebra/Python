@@ -35,11 +35,12 @@ def circle_points():
 
 points = circle_points()
 
-pyautogui.mouseDown(points[0], button='left')
+pyautogui.moveTo(points[0])
+pyautogui.mouseDown(button='left')
 
 with keyboard.Listener(on_press=on_press) as listener:
     for point in points:
-       pyautogui.moveTo(point, _pause = False)
+       pyautogui.moveTo(point, _pause=False)
        if listener.running is False:
               break
      
