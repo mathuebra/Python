@@ -38,6 +38,8 @@ points = circle_points()
 pyautogui.moveTo(points[0])
 pyautogui.mouseDown(button='left')
 
+#nao ta clicando
+
 with keyboard.Listener(on_press=on_press) as listener:
     for point in points:
        pyautogui.moveTo(point, _pause=False)
