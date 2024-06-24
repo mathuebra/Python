@@ -10,6 +10,12 @@ import re
 # A partir dai é só executar e escrever o número que você quer procurar
 # Simples assim
 
+# Observação importante:
+# Caso o código esteja com as coordenadas erradas, é só trocar por coordenadas válidas usando:
+# pyautogui.displayMousePosition() # Utilize em um novo código, só essa linha mesmo
+# Esse comando vai te mostrar a coordenada atual do mouse na tela, use ele para definir o 
+# "local certo" de onde o programa deve clicar em cada variável
+
 def buscar_patentes(search_number):
     # Definição de coordenadas
 
