@@ -89,7 +89,13 @@ class BD:
         status = None
         self.insert("USUARIO", ["NOME", "STATUS", "DATA_NASCIMENTO", "EMAIL", "SENHA"], [nome, status, data, email, senha])
         
-
+    def get_conversas(self, user):
+        variable = self.select("USUARIO", "ID_USER", )
+        self.execute_unique(f'''SELECT * FROM MENSAGEM_PRIVADA WHERE 
+                            ID_USER_ORIGEM = {user} OR
+                            ID_USER_DESTINO = {user}
+                            GROUP_BY {TODO}''')
+        
 # Exemplo de uso da classe BD
 # #database.create("users", ["NOME VARCHAR(50)", "EMAIL VARCHAR(50)", "SENHA VARCHAR(50)"])
 # database.insert("users", ["Matheus", "mathuebra@gmail.com", "123e456"])
