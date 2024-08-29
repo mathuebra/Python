@@ -21,9 +21,8 @@ def create_table():
 # Rota pra inserir um registro
 @app.route('/insert', methods=['POST'])
 def insert():
-    data = request.json
-    table = data['table']
-    values = data['values']
+    table = request.form['table']
+    values = request.form['values'].split(',')
     database.insert(table, values)
     return jsonify({"message": "Registro inserido com sucesso"}), 201
 
@@ -36,22 +35,21 @@ def select():
     result = database.select(table, columns, condition)
     return jsonify(result), 200
 
-# Rota pra atualizar valores
-@app.route('/update', methods=['PUT'])
+# Rota pra atualizar um registro
+@app.route('/update', methods=['POST'])
 def update():
-    data = request.json
-    table = data['table']
-    columns = data['columns']
-    values = data['values']
-    condition = data['condition']
+    table = request.form['table']
+    columns = request.form['columns'].split(',')
+    values = request.form['values'].split(',')
+    condition = request.form['condition']
     database.update(table, columns, values, condition)
     return jsonify({"message": "Registro alterado com sucesso"}), 200
 
-@app.route('/delete', methods=['DELETE'])
+# Rota pra deletar um registro
+@app.route('/delete', methods=['POST'])
 def delete():
-    data = request.json
-    table = data['table']
-    condition = data['condition']
+    table = request.form['table']
+    condition = request.form['condition']
     database.delete(table, condition)
     return jsonify({"message": "Registro removido com sucesso"}), 200
 

@@ -3,8 +3,7 @@ import sqlite3 as sql
 # TODO tratar erros possíveis pois o webframe não está tratando
 
 class BD:
-    
-    database = "/home/mathuebra/VSCode/Python/SQLPython/TP_BD/example.db"
+    database = "/home/mathuebra/VSCode/Python/SQLPython/TP_BD/db"
     conn = None
     cursor = None
     connected = False
@@ -38,10 +37,11 @@ class BD:
         else:
             return False
         
-    def insert(self, table, values):
-        place_holders = ", ".join(['?'] * len(values))  # cria uma string com ? separados por vírgula
-        sqlquery = f"INSERT INTO {table} VALUES ({place_holders})"
-        
+    def insert(self, table, columns, values):
+        placeholders = ', '.join(['?'] * len(values))
+        columns_str = ', '.join(columns)
+        sqlquery = f"INSERT INTO {table} ({columns_str}) VALUES ({placeholders})"
+
         self.connect()
         self.execute(sqlquery, values)
         self.persist()
@@ -65,33 +65,32 @@ class BD:
         self.persist()
         self.disconnect()
         
-    def select(self, table, columns, condition):
+    def select(self, table, columns, condition, params=()):
         columns = ", ".join(columns)
         sqlquery = f"SELECT {columns} FROM {table} WHERE {condition}"
         
         self.connect()
-        self.execute(sqlquery)
+        self.execute(sqlquery, params)
         result = self.fetchall()
         self.disconnect()
         return result
-    
-    def create(self, table, columns):
-        columns = ", ".join(columns)
-        sqlquery = f"CREATE TABLE {table} ({columns})"
-        
-        self.connect()
-        self.execute(sqlquery)
-        self.persist()
-        self.disconnect()
+
         
     def execute_unique(self, sql):
         self.connect()
         self.execute(sql)
         self.persist()
         self.disconnect()
+        
+    def verify_login(self, email, senha):
+        return self.select("USUARIO", "*", f"EMAIL = ? AND SENHA = ?", [email, senha])
+    
+    def create_user(self, nome, email, senha, data):
+        status = None
+        self.insert("USUARIO", ["NOME", "STATUS", "DATA_NASCIMENTO", "EMAIL", "SENHA"], [nome, status, data, email, senha])
+        
 
 # Exemplo de uso da classe BD
-database = BD() # TODO: isso não é necessário, remover depois
 # #database.create("users", ["NOME VARCHAR(50)", "EMAIL VARCHAR(50)", "SENHA VARCHAR(50)"])
 # database.insert("users", ["Matheus", "mathuebra@gmail.com", "123e456"])
 # database.insert("users", ["Letícia", "leticinha@gmail.com", "123e456"])

@@ -1,59 +1,54 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema ChatWeb</title>
-    <!--Definição do local do .js pra aplicar na página-->
-    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
+    <title>Flask and CSS Integration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Sistema ChatWeb versão 1.1.0</h1>
+    <h1>Sistema ChatWeb (v 1.0)</h1>
 
-    <!--Definição da inserção na tabela-->
-    <h2>INSERT</h2>
-    <form id="insertForm">
-        <label for="insertTable">Tabela:</label>
-        <input type="text" id="insertTable" name="table" required> <!--Tabela-->
-        <label for="insertValues">Values (Não esquecer da vírgula (auto-crítica)):</label>
-        <input type="text" id="insertValues" name="values" required> <!--Valores-->
-        <button type="submit">INSERT</button>
+    <h2>Insert Record</h2>
+    <form action="/insert" method="post">
+        <label for="insertTable">Table:</label>
+        <input type="text" id="insertTable" name="table" required>
+        <label for="insertValues">Values (comma-separated):</label>
+        <input type="text" id="insertValues" name="values" required>
+        <button type="submit">Insert</button>
     </form>
 
-    <!--Definição da seleção na tabela-->
-    <h2>SELECT</h2>
-    <form id="selectForm">
-        <label for="selectTable">Tabela:</label>
-        <input type="text" id="selectTable" name="table" required> <!--Tabela-->
-        <label for="selectColumns">Colunas (Não esquecer da vírgula (auto-crítica)):</label>
-        <input type="text" id="selectColumns" name="columns" required> <!--Colunas desejadas do SELECT-->
-        <label for="selectCondition">Condição:</label>
-        <input type="text" id="selectCondition" name="condition"> <!--Condição WHERE do SELECT-->
-        <button type="submit">SELECT</button>
+    <h2>Select Records</h2>
+    <form action="/select" method="get">
+        <label for="selectTable">Table:</label>
+        <input type="text" id="selectTable" name="table" required>
+        <label for="selectColumns">Columns (comma-separated):</label>
+        <input type="text" id="selectColumns" name="columns" required>
+        <label for="selectCondition">Condition:</label>
+        <input type="text" id="selectCondition" name="condition">
+        <button type="submit">Select</button>
     </form>
 
-    <!--Definição da atualização na tabela-->
-    <h2>UPDATE</h2>
-    <form id="updateForm">
-        <label for="updateTable">Tabela:</label>
-        <input type="text" id="updateTable" name="table" required> <!--Tabela-->
-        <label for="updateColumns">Colunas (Não esquecer da vírgula (auto-crítica)):</label>
-        <input type="text" id="updateColumns" name="columns" required> <!--Colunas que são pra serem atualizadas no UPDATE-->
-        <label for="updateValues">Values (Não esquecer da vírgula (auto-crítica)):</label>
-        <input type="text" id="updateValues" name="values" required> <!--Valores que serão inseridos-->
-        <label for="updateCondition">Condição:</label>
-        <input type="text" id="updateCondition" name="condition" required> <!--Condição WHERE do UPDATE-->
-        <button type="submit">UPDATE</button>
+    <h2>Update Record</h2>
+    <form action="/update" method="post">
+        <label for="updateTable">Table:</label>
+        <input type="text" id="updateTable" name="table" required>
+        <label for="updateColumns">Columns (comma-separated):</label>
+        <input type="text" id="updateColumns" name="columns" required>
+        <label for="updateValues">Values (comma-separated):</label>
+        <input type="text" id="updateValues" name="values" required>
+        <label for="updateCondition">Condition:</label>
+        <input type="text" id="updateCondition" name="condition" required>
+        <button type="submit">Update</button>
     </form>
 
-    <!--Definição da exclusão na tabela-->
-    <h2>DELETE</h2>
-    <form id="deleteForm">
-        <label for="deleteTable">Tabela:</label>
-        <input type="text" id="deleteTable" name="table" required> <!--Tabela-->
-        <label for="deleteCondition">Condição:</label>
-        <input type="text" id="deleteCondition" name="condition" required> <!--Condição WHERE do DELETE-->
-        <button type="submit">DELETE</button>
+    <h2>Delete Record</h2>
+    <form action="/delete" method="post">
+        <label for="deleteTable">Table:</label>
+        <input type="text" id="deleteTable" name="table" required>
+        <label for="deleteCondition">Condition:</label>
+        <input type="text" id="deleteCondition" name="condition" required>
+        <button type="submit">Delete</button>
     </form>
 
     <div id="result"></div>
