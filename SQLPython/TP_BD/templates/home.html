@@ -6,8 +6,16 @@
     <title>Home</title>
 </head>
 <body>
-    <h1>Home Page</h1>
-    <a href="/create_user"><button>Criar Usuário</button></a>
-    <!-- Outros conteúdos da home page -->
+    <h1>Bem-vindo à sua página inicial</h1>
+    {% if conversas %}
+        <h2>Suas Conversas</h2>
+        <ul>
+            {% for conversa in conversas %}
+                <li>{{ conversa }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Você não tem conversas no momento.</p>
+    {% endif %}
 </body>
 </html>

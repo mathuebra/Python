@@ -39,8 +39,8 @@ def process_signup():
 def home():
     if 'user_id' in session:
         user_id = session['user_id']
-        # logica das conversas
-        return render_template('home.html')
+        conversas = db.get_conversas(user_id)
+        return render_template('home.html', conversas=conversas)
 
 if __name__ == '__main__':
     app.run(debug=True)

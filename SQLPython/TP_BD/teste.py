@@ -1,0 +1,9 @@
+import new_backend
+
+db = new_backend.BD()
+
+sqlquery = '''SELECT CONTEUDO FROM MENSAGEM_PRIVADA 
+            WHERE (ID_USER_ORIGEM = 1 AND ID_USER_DESTINO = 2) OR
+                (ID_USER_ORIGEM = 2 AND ID_USER_DESTINO = 1)'''
+
+print(db.select("MENSAGEM_PRIVADA", ["CONTEUDO"], "(ID_USER_ORIGEM = 1 AND ID_USER_DESTINO = 2) OR (ID_USER_ORIGEM = 2 AND ID_USER_DESTINO = 1)"))

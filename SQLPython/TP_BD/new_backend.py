@@ -3,7 +3,7 @@ import sqlite3 as sql
 # TODO tratar erros possíveis pois o webframe não está tratando
 
 class BD:
-    database = "/home/mathuebra/VSCode/Python/SQLPython/TP_BD/db"
+    database = "/home/mathuebra/VS/Python/SQLPython/TP_BD/db"
     conn = None
     cursor = None
     connected = False
@@ -89,12 +89,12 @@ class BD:
         status = None
         self.insert("USUARIO", ["NOME", "STATUS", "DATA_NASCIMENTO", "EMAIL", "SENHA"], [nome, status, data, email, senha])
         
-    def get_conversas(self, user):
-        variable = self.select("USUARIO", "ID_USER", )
-        self.execute_unique(f'''SELECT * FROM MENSAGEM_PRIVADA WHERE 
-                            ID_USER_ORIGEM = {user} OR
-                            ID_USER_DESTINO = {user}
-                            GROUP_BY {TODO}''')
+    def get_conversas(self, user_id):
+        self.connect()
+        return self.cursor.execute(f'''SELECT CONTEUDO FROM MENSAGEM_PRIVADA WHERE
+                                   (ID_USER_ORIGEM = ? AND ID_USER_DESTINO = ?) OR
+                                   (ID_USER_ORIGEM = ? AND ID_USER_DESTINO = ?)''', [user_id, 2, 2, user_id]).fetchall()
+    
         
 # Exemplo de uso da classe BD
 # #database.create("users", ["NOME VARCHAR(50)", "EMAIL VARCHAR(50)", "SENHA VARCHAR(50)"])
