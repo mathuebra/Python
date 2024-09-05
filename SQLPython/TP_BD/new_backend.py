@@ -3,7 +3,7 @@ import sqlite3 as sql
 # TODO tratar erros possíveis pois o webframe não está tratando
 
 class BD:
-    database = "/home/mathuebra/VS/Python/SQLPython/TP_BD/db"
+    database = "/home/mathuebra/VSCode/Python/SQLPython/TP_BD/db"
     conn = None
     cursor = None
     connected = False
@@ -83,17 +83,29 @@ class BD:
         self.disconnect()
         
     def verify_login(self, email, senha):
-        return self.select("USUARIO", "*", f"EMAIL = ? AND SENHA = ?", [email, senha])
+        result = self.select("USUARIO", ["ID_USER"], f"EMAIL = ? AND SENHA = ?", [email, senha])
+        if result:
+            return result[0]
     
     def create_user(self, nome, email, senha, data):
         status = None
         self.insert("USUARIO", ["NOME", "STATUS", "DATA_NASCIMENTO", "EMAIL", "SENHA"], [nome, status, data, email, senha])
         
     def get_conversas(self, user_id):
+        conversas = []
         self.connect()
-        return self.cursor.execute(f'''SELECT CONTEUDO FROM MENSAGEM_PRIVADA WHERE
-                                   (ID_USER_ORIGEM = ? AND ID_USER_DESTINO = ?) OR
-                                   (ID_USER_ORIGEM = ? AND ID_USER_DESTINO = ?)''', [user_id, 2, 2, user_id]).fetchall()
+        # return self.cursor.execute(f'''SELECT ID_USER_ORIGEM, ID_USER_DESTINO, CONTEUDO, DATA_ENVIO FROM MENSAGEM_PRIVADA WHERE
+        #                            ID_USER_ORIGEM = ? OR ID_USER_DESTINO = ?
+        #                            ORDER BY DATA_ENVIO''', [user_id, user_id]).fetchall()
+
+        for row in self.select("USUARIO", ["ID_USER"], "ID_USER != ?", [user_id]):
+            # retornar todos os id_user (que nao sao o usuario) em cada posicao do vetor conversas 
+
+        
+        return self.cursor.execute(f'''SELECT U.NOME, M.CONTEUDO, M.DATA_ENVIO FROM MENSAGEM_PRIVADA M
+                                    OUTER JOIN USUARIO U ON M.ID_USER_ORIGEM = U.ID_USER
+                                    WHERE ID_USER_ORIGEM = ? OR ID_USER_DESTINO = ?''')
+        
     
         
 # Exemplo de uso da classe BD

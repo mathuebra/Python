@@ -38,9 +38,11 @@ def process_signup():
 @app.route('/home')
 def home():
     if 'user_id' in session:
-        user_id = session['user_id']
-        conversas = db.get_conversas(user_id)
+        user_id = session['user_id']  
+        conversas = db.get_conversas(user_id) # Retorna um vetor com tuplas (ID_USER_ORIGEM, ID_USER_DESTINO, CONTEUDO, DATA_ENVIO)
         return render_template('home.html', conversas=conversas)
+    else:
+        return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=True)
